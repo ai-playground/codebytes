@@ -16,4 +16,11 @@ if __name__=="__main__":
     L1.insert(args.i1)
     #L1.print()
     L1.insert(args.i2)
+    L1.insert(111)
+    L1.insert(222)
+    L1.insert(333)
+    L1.insert(444)
+    L1.print()
+
+    L1.reverse(1,2)
     L1.print()
