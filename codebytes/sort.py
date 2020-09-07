@@ -161,6 +161,97 @@ def merge(array, low, high, mid):
     return
 
 
+def quick_sort(array):
+    """Merges two arrays using quick sort algorithm.
+
+    The input list is assumed to consists of only numbers.
+
+    Args:
+        array: A python list of numbers.
+
+    Returns:
+        A list of sorted numbers.
+
+    Raises:
+        None.
+    """
+    low = 0
+    high = len(array)-1
+    # driver_program for merge sort
+    quick_sort_helper(array, low, high)
+    return array
+
+
+def quick_sort_helper(array, low, high):
+    """A helper function to recursively implement quick sort.
+
+    The input list is assumed to consists of only numbers.
+
+    Args:
+        array: A python list of numbers.
+
+    Returns:
+        None.
+
+    Raises:
+        None.
+    """
+    if low >= high:
+        return
+    pivot_index = chose_pivot(array, low, high)
+    partition_index = partition(array, low, high, pivot_index)
+    quick_sort_helper(array, low, partition_index-1)
+    quick_sort_helper(array, partition_index+1, high)
+    return
+
+
+def chose_pivot(array, low, high):
+    """
+    [22, 44, 55, 33, 11]
+    low = 0
+    high = 4
+    pivot_index
+    """
+    middle = low+high//2
+
+    if array[low] > array[middle]:
+        array[low], array[middle] = array[middle], array[low]
+    if array[middle] > array[high]:
+        array[high], array[middle] = array[middle], array[high]
+    if array[low] > array[middle]:
+        array[low], array[middle] = array[middle], array[low]
+    return middle
+
+
+def partition(array, low, high, pivot_index):
+
+    """
+    [22, 44, 55, 33, 11]
+    low = 0
+    high = 4
+    pivot_index = 3 i.e element = 33
+    """
+    pivot = array[pivot_index]
+    array[high], array[pivot_index] = array[pivot_index], array[high]
+    left = low
+    right = high-1
+
+    while True:
+        while array[left] < pivot:
+            left += 1
+        while array[right] > pivot:
+            right -= 1
+        if left < right:
+            array[left], array[right] = array[right], array[left]
+            left += 1
+            right -= 1
+        else:
+            break
+
+    partition_index = left
+    array[partition_index], array[high] = array[high], array[partition_index]
+    return partition_index
+
 class sortingTest(unittest.TestCase):
     def test_selection_sort(self):
         self.assertEqual(selection_sort([11, 22, 33, 44]), [11, 22, 33, 44])
@@ -183,12 +274,19 @@ class sortingTest(unittest.TestCase):
         self.assertEqual(merge_sort([44, 33, 22, 11]), [11, 22, 33, 44])
         return
 
+    def test_quick_sort(self):
+        self.assertEqual(quick_sort([11, 22, 33, 44]), [11, 22, 33, 44])
+        self.assertEqual(quick_sort([22, 11, 33, 44]), [11, 22, 33, 44])
+        self.assertEqual(quick_sort([11, 33, 22, 44]), [11, 22, 33, 44])
+        self.assertEqual(quick_sort([44, 33, 22, 11]), [11, 22, 33, 44])
+        return
+
 
 if __name__ == "__main__":
     #test_array = [22,55,11,44,33]
     #insertion_sort(test_array)
     unittest.main()
-    
+
     #mem_usage = memory_usage(merge)
     #print('Memory usage (in chunks of .1 seconds): %s' % mem_usage)
     #print('Maximum memory usage: %s' % max(mem_usage))
