@@ -52,3 +52,50 @@ def evaluate_expression(cur_expression):
             s[i:] = s[i+2:]
             
     return int(s[0])
+
+
+
+def generate_all_permutations(s):
+    out = []
+    generate_all_permutations_helper(s, out, 0)
+    return out
+
+
+def generate_all_permutations_helper(s, out, idx):
+    if idx == len(s):
+        print("Here is what is appended {}".format(s))
+        out.append(s.copy())
+        print("Here is out now {}".format(out))
+        return
+    for j in range(idx, len(s)):
+        s[j], s[idx] = s[idx], s[j]
+        print(s[idx:])
+        generate_all_permutations_helper(s, out, idx+1)
+        s[j], s[idx] = s[idx], s[j]
+    return
+
+
+def generate_all_subsets(s):
+    out = []
+    generate_all_subsets_helper(s, out, 0, 0)
+    return out
+
+
+def generate_all_subsets_helper(s, out, input_idx, output_idx):
+    if input_idx == len(s):
+        #print("Here is what is appended {}".format(s))
+        print("SUBSETOUTPUT{}".format(out[:output_idx]))
+        #print("Here is out now {}".format(out))
+        return
+    generate_all_subsets_helper(s, out, input_idx+1, output_idx)
+    out.append(s[input_idx])
+    generate_all_subsets_helper(s, out, input_idx+1, output_idx+1)
+    
+    return
+
+
+if __name__ == "__main__":
+    s=["a", "b", "c","d"]
+    out = generate_all_subsets(s)
+    print(out)
+    print(len(out))
