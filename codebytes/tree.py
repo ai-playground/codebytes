@@ -9,7 +9,7 @@ class Tree:
     def __init__(self, root=None):
         self.root = root
 
-    def inorder(self):
+    def preorder(self):
 
         def _print(current):
             if current:
@@ -19,12 +19,12 @@ class Tree:
         
         _print(self.root)
 
-    def preorder(self):
+    def inorder(self):
 
         def _print(current):
             if current:
                 _print(current.left)
-                print("/t{}".format(current.data))
+                print("\t{}".format(current.data))
                 _print(current.right)
         
         _print(self.root)
@@ -38,6 +38,41 @@ class Tree:
                 print("\t{}".format(current.data))
         
         _print(self.root)
+    
+    def inorder_iterative(self):
+        node = self.root
+        q = []
+        if node is None:
+            return
+
+        while True:
+            if node:
+                q.append(node)
+                node = node.left
+            else:
+                if not q:
+                    break
+                else:
+                    node = q.pop()
+                    print("\t",node.data)
+                    node=node.right
+        return
+
+    def preorder_iterative(self):
+        node = self.root
+        q = []
+        if node is None:
+            return
+        q.append(node)
+        
+        while q:
+            node = q.pop()
+            print(node.data)
+            if node.right:
+                q.append(node.right)
+            if node.left:
+                q.append(node.left)
+        return
 
     def levelorder(self):
 
@@ -195,14 +230,20 @@ if __name__ == "__main__":
     T.insert(77)
     T.insert(88)
     #T.levelorder()
+    T.inorder()
+    print("#"*40)
+    T.inorder_iterative()
+    print("#"*40)
     #print(T.max().data)
     #print(T.min().data)
+
+    """
     for i in [11,22,33,44,55,66,77,88,99]:
         print(i,"h")
         print(T.successor(i))
         print(T.predecessor(i))
 
-    """
+    
     ************33********
     ***11**************66***
     *******22*******55**********99
